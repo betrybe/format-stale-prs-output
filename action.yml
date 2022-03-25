@@ -1,0 +1,28 @@
+name: "Stale PRs output format"
+author: "Trybe"
+description: "Esta GitHub Action recebe JSONs da Github Action actions/stale e formata para uma lista legível das URLs das PRs"
+inputs:
+  staledPRs:
+    description: "JSON de PRs staled"
+    required: true
+  closedPRs:
+    description: "JSON de PRs closed"
+    required: false
+outputs:
+  staledPRs:
+    description: "Lista de PRs staled"
+    value: ${{ steps.format_list.outputs.staledPRs }}
+  closedPRs:
+    description: "Lista de PRs closed"
+    value: ${{ steps.format_list.outputs.closedPRs }}
+
+
+runs:
+  using: "composite"
+  steps:
+    - id: format_list
+      shell: bash
+      run: ${{ github.action_path }}/format.sh
+      env:
+        STALED_PRS: ${{ inputs.staledPRs }}
+        CLOSED_PRS: ${{ inputs.closedPRs }}
