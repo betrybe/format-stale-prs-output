@@ -1,0 +1,1 @@
+# format-stale-prs-output
